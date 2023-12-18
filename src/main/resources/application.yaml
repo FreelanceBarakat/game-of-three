@@ -1,0 +1,66 @@
+feign:
+  client:
+    config:
+      game-of-three:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        errorDecoder: com.example.SimpleErrorDecoder
+        retryer: com.example.SimpleRetryer
+        decode404: false
+        encoder: com.example.SimpleEncoder
+        decoder: com.example.SimpleDecoder
+        contract: com.example.SimpleContract
+  url: "${other-player-url:http://localhost:9999/OTHER_PLAYER_URL}"
+
+
+
+logging:
+  level:
+    com.just.takeaway.adapter.GameClient: DEBUG
+
+
+
+spring:
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:localhost:9092}
+    client-id: ${app.user_name}
+    properties:
+      allow.auto.create.topics: "true"
+    consumer:
+      max-poll-records: 100
+      group-id: ${app.user_name}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      acks: "all"
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      compression-type: "snappy"
+      batch-size: 32KB
+      # only a fell set of properties can be passed using KafkaProperties
+      # all other properties can be added through properties.*
+      properties:
+        enable.idempotence: "true"
+        linger.ms: 20 # in milliseconds
+
+fallback:
+  topic:
+    current-process-topic:
+      game-submission-topic: "game-submission-${app.user_name}-topic"
+      turn-topic: "turn-${app.user_name}-topic"
+      game-results-topic: "game-results-${app.user_name}-topic"
+
+    other-process-topic:
+      game-submission-topic: "game-submission-${app.other_user_name}-topic"
+      turn-topic: "turn-${app.other_user_name}-topic"
+      game-results-topic: "game-results-${app.other_user_name}-topic"
+
+app:
+  user_name: player
+  other_user_name: other_player
