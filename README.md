@@ -1,5 +1,5 @@
 # Summary
-###Technologies used:
+### Technologies used:
 - Java 17
 - Spring boot.
 - Feign client ( Main communication between the 2 players, namely RESTFUL)
@@ -10,14 +10,14 @@
 - Wiremock
 - Docker-ization
 - Lomobok, mapstruct
-###HOW TO RUN:
+### HOW TO RUN:
 `docker-compose up -d`
 
 This will deploy:
 - Kafka, Control center for visualizing Kafka.
 - 2 instances of Game-of-Three game: 1 for each player
 
-#How to Play the game:
+# How to Play the game:
 Each player will need to use different urls bases namely:
 - localhost:8080 & localhost:8081
 
