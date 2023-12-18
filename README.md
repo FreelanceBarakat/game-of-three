@@ -2,8 +2,8 @@
 ###Technologies used:
 - Java 17
 - Spring boot.
-- Feign client
-- Kafka as a fallback mechanism
+- Feign client ( Main communication between the 2 players, namely RESTFUL)
+- Kafka as a fallback mechanism ( Secondary communication method in case of one process is down!)
 - Monitoring ( Prometheus ) and Tracing
 - findbugs plugin
 - Cucumber for behavioural testing, Jacoco for tests coverage.
